@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import BasicTabs from './insideLogRegModal/nav';
+import { Logout } from '@mui/icons-material';
 
 const style = {
   position: 'absolute',
@@ -19,18 +20,25 @@ const style = {
 
 export default function LogRegModal() {
   const [open, setOpen] = React.useState(false);
-  const [login,setLogin] = useState("login")
-  const handleOpen = () => setOpen(true);
+  const [login, setLogin] = useState("login")
+  const handleOpen = (e) => {
+    setOpen(true);
+    if (e.target.value === "logout"){
+      setOpen(false);
+      setLogin("login")
+    }
+      
+  }
   const handleClose = () => setOpen(false);
 
-  const afterLoginClick=()=>{
-    setLogin("logout") 
+  const afterLoginClick = (e) => {
+    setLogin("logout");
     // used props to go from logRegModal to nav.js to loginnav.js
   }
 
   return (
     <div >
-      <Button onClick={handleOpen} variant="contained" >{login}</Button>
+      <Button onClick={handleOpen} variant="contained" value={login}>{login}</Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -38,7 +46,7 @@ export default function LogRegModal() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <BasicTabs afterLoginClick={afterLoginClick}/>
+          <BasicTabs afterLoginClick={afterLoginClick} />
         </Box>
       </Modal>
     </div>
